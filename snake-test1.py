@@ -28,13 +28,11 @@ food_stamps= []
 
 snake = turtle.clone()
 snake.shape("triangle")
-snake.fillcolor("red")
+color_list = ("red", 'blue', 'green')
+snake.fillcolor(color_list[1])
 turtle.hideturtle()
 
-P_ARROW = "Up"
-LEFT_ARROW = "Left"
-DOWN_ARROW = "Down"
-RIGHT_ARROW = "Right"
+scour = turtle.clone()
 
 TIME_STEP = 100
 
@@ -115,7 +113,7 @@ def right():
    
     print("You pressed the RIGHT key")
 
-turtle.onkeypress( up, UP_ARROW)
+turtle.onkeypress( up , UP_ARROW)
 turtle.onkeypress( down, DOWN_ARROW)
 turtle.onkeypress( left, LEFT_ARROW)
 turtle.onkeypress( right, RIGHT_ARROW)
@@ -142,8 +140,7 @@ def make_food():
         food_stamps.append(new_food)
         new_food_pos = food.pos()
         food_pos.append(new_food_pos)
-    
-
+scour_int = 0
 def move_snake():
     my_pos = snake.pos()
     x_pos = my_pos[0]
@@ -175,7 +172,6 @@ def move_snake():
     new_stamp = snake.stamp()
     stamp_list.append(new_stamp)
     ###pop 0 ele. in pos_list to get #RID OF THE TAIL LAST PIECE#######
-    old_stamp = stamp_list[0]
     
     
 
@@ -185,11 +181,19 @@ def move_snake():
         food.clearstamp(food_stamps[food_ind])
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
+        
+        global scour_int
+        scour_int +=1
+        print(scour)
+        scour.goto(250, 250)
+        scour.clear()
+        scour.write(scour_int, align="right", font=("Ariel", 15, "normal"))
         make_food()
     else:
         old_stamp = stamp_list.pop(0)
         snake.clearstamp(old_stamp)
         pos_list.pop(0)
+        
 #######part3
     
     if new_x_pos >= RIGHT_EDGE:
@@ -218,6 +222,7 @@ def move_snake():
 
 make_food()
 move_snake()
+
 
 
 ##
