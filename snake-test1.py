@@ -6,17 +6,25 @@ turtle.tracer(1,0)
 SIZE_X=800
 SIZE_Y=500
 
+trt = turtle.clone()
+
+
 turtle.setup(SIZE_X, SIZE_Y)
-turtle.pensize(10)
+trt.pensize(10)
+trt.penup()
+trt.goto(400-1, 250-1)
+trt.pendown()
+trt.goto(-400+1, 250-1)
+trt.goto(-400+1, -250+1)
+trt.goto(400-1, -250+1)
+trt.goto(400-1, 250-1)
+trt.penup()
+trt.goto(0,0)
 turtle.penup()
-turtle.goto(400-1, 250-1)
-turtle.pendown()
-turtle.goto(-400+1, 250-1)
-turtle.goto(-400+1, -250+1)
-turtle.goto(400-1, -250+1)
-turtle.goto(400-1, 250-1)
-turtle.penup()
-turtle.goto(0,0)
+turtle.ht()
+trt.ht()
+
+
 
 SQUARE_SIZE = 20
 START_LENGTH = 3
@@ -28,11 +36,9 @@ food_stamps= []
 
 snake = turtle.clone()
 snake.shape("triangle")
-color_list = ("red", 'blue', 'green')
-snake.fillcolor(color_list[1])
-turtle.hideturtle()
+color_list = ["red", 'blue', 'green', 'purple', 'pink', 'brown', 'yellow', 'orange', 'deep pink', 'cyan']
 
-scour = turtle.clone()
+turtle.hideturtle()
 
 TIME_STEP = 100
 
@@ -140,7 +146,11 @@ def make_food():
         food_stamps.append(new_food)
         new_food_pos = food.pos()
         food_pos.append(new_food_pos)
-scour_int = 0
+        
+score_val = 0
+score = turtle.clone()
+scr = score.clone()
+
 def move_snake():
     my_pos = snake.pos()
     x_pos = my_pos[0]
@@ -173,7 +183,7 @@ def move_snake():
     stamp_list.append(new_stamp)
     ###pop 0 ele. in pos_list to get #RID OF THE TAIL LAST PIECE#######
     
-    
+##    the score turtle object is called "scr"
 
     # the snake is eating the food
     if snake.pos() in food_pos:
@@ -181,14 +191,16 @@ def move_snake():
         food.clearstamp(food_stamps[food_ind])
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
-        
-        global scour_int
-        scour_int +=1
-        print(scour)
-        scour.goto(250, 250)
-        scour.clear()
-        scour.write(scour_int, align="right", font=("Ariel", 15, "normal"))
         make_food()
+        global score_val
+        score_val +=1
+        print(score_val)
+        scr.clear()
+        scr.goto(250,250)
+        scr.clear()
+        scr.write(str(score_val), "center", font=("Ariel", 15, "normal"))
+        snake.fillcolor(random.choice(color_list))
+
     else:
         old_stamp = stamp_list.pop(0)
         snake.clearstamp(old_stamp)
@@ -198,18 +210,22 @@ def move_snake():
     
     if new_x_pos >= RIGHT_EDGE:
         print("you hit the right edge! GAME OVER!")
+##        turtle.sleep(3)
         quit()
 
     if new_x_pos <= LEFT_EDGE:
         print("you hit the left edge! GAME OVER!")
+##        turtle.sleep(3)
         quit()
 
     if new_y_pos >= UP_EDGE:
         print("you hit the top edge! GAME OVER!")
+##        turtle.sleep(3)
         quit()
 
     if new_y_pos <= DOWN_EDGE:
         print("you hit the down edge! GAME OVER!")
+##        turtle.sleep(3)
         quit()
      ### SNAKE DONT EAT YOURSELF !!!
     
